@@ -25,8 +25,9 @@ if (!empty($_POST)) {
     $fullname = isset($_POST['fullname']) ? $_POST['fullname'] : '';
     $password = isset($_POST['password']) ? $_POST['password'] : '';
     $email = isset($_POST['email']) ? $_POST['email'] : '';
-
     $language = isset($_POST['language']) ? $_POST['language'] : '';
+    $profilePicture = isset($_POST['profilePicture']) ? $_POST['profilePicture'] : '';
+    $coverPicture = isset($_POST['coverPicture']) ? $_POST['coverPicture'] : '';
 
     $clientId = helper::clearInt($clientId);
 
@@ -66,6 +67,15 @@ if (!empty($_POST)) {
         $account = new account($dbo);
         $account->setState(ACCOUNT_STATE_ENABLED);
         $account->setLastActive();
+        if ($profilePicture != "") {
+            $params = [
+                    'originPhotoUrl' => $profilePicture, 'normalPhotoUrl' => $profilePicture,
+                    'bigPhotoUrl' => $profilePicture, 'lowPhotoUrl' => $profilePicture];
+            $account->setPhoto($params);
+        }
+        if ($coverPicture != "") {
+            $account->setCover(['originCoverUrl' => $coverPicture, 'normalCoverUrl' => $coverPicture]);
+        }
         $result = $account->signin($username, $password);
         unset($account);
 
