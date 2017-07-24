@@ -226,11 +226,11 @@
                                         <script type="text/javascript">
 
                                             tinymce.init({ selector:'textarea', toolbar: [
-                                                'undo redo | styleselect | bold italic | link image',
+                                                'undo redo | styleselect | bold italic | link image', 'media', 'anchor', 'link',
                                                 'alignleft aligncenter alignright'
                                             ],
                                                 plugins: [
-                                                    'image'
+                                                    'image', "media", 'anchor', 'link'
                                                 ]});
                                             $('#textarea1').trigger('autoresize');
 

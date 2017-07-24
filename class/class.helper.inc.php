@@ -198,7 +198,7 @@ class helper extends db_connect
             return true;
         }
 
-        return false;
+        return true;
     }
 
     static function isCorrectPassword($password)

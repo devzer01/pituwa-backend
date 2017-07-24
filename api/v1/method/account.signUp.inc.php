@@ -14,6 +14,8 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config/api.inc.php");
 
 if (!empty($_POST)) {
 
+	file_put_contents("/var/tmp/signup-post.txt", print_r($_POST, true));
+
     $clientId = isset($_POST['clientId']) ? $_POST['clientId'] : 0;
 
     $gcm_regId = isset($_POST['gcm_regId']) ? $_POST['gcm_regId'] : '';
@@ -60,6 +62,15 @@ if (!empty($_POST)) {
 
     $account = new account($dbo);
     $result = $account->signup($username, $fullname, $password, $email);
+        if ($profilePicture != "") {
+            $params = [
+                    'originPhotoUrl' => $profilePicture, 'normalPhotoUrl' => $profilePicture,
+                   'bigPhotoUrl' => $profilePicture, 'lowPhotoUrl' => $profilePicture];
+            $account->setPhoto($params);
+        }
+        if ($coverPicture != "") {
+            $account->setCover(['originCoverUrl' => $coverPicture, 'normalCoverUrl' => $coverPicture]);
+        }
     unset($account);
 
     if ($result['error'] === false) {
@@ -67,15 +78,6 @@ if (!empty($_POST)) {
         $account = new account($dbo);
         $account->setState(ACCOUNT_STATE_ENABLED);
         $account->setLastActive();
-        if ($profilePicture != "") {
-            $params = [
-                    'originPhotoUrl' => $profilePicture, 'normalPhotoUrl' => $profilePicture,
-                    'bigPhotoUrl' => $profilePicture, 'lowPhotoUrl' => $profilePicture];
-            $account->setPhoto($params);
-        }
-        if ($coverPicture != "") {
-            $account->setCover(['originCoverUrl' => $coverPicture, 'normalCoverUrl' => $coverPicture]);
-        }
         $result = $account->signin($username, $password);
         unset($account);
 
@@ -119,6 +121,7 @@ if (!empty($_POST)) {
         }
     }
 
+	file_put_contents("/var/tmp/signup-json.txt", json_encode($result));
     echo json_encode($result);
     exit;
 }
