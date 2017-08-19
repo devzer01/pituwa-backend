@@ -53,6 +53,7 @@
 
         $authToken = isset($_POST['authenticity_token']) ? $_POST['authenticity_token'] : '';
         $title = isset($_POST['title']) ? $_POST['title'] : '';
+        $videoUrl = isset($_POST['videoUrl']) ? $_POST['videoUrl'] : '';
         $description = isset($_POST['description']) ? $_POST['description'] : '';
         $content = isset($_POST['content']) ? $_POST['content'] : '';
         $category = isset($_POST['category']) ? $_POST['category'] : 0;
@@ -62,7 +63,7 @@
         $videoUrl = helper::clearText($videoUrl);
         $videoUrl = helper::escapeText($videoUrl);
         
-	$title = helper::clearText($title);
+	    $title = helper::clearText($title);
         $title = helper::escapeText($title);
 
         $description = helper::clearText($description);
@@ -93,7 +94,7 @@
 
             $item = new items($dbo);
 
-            $result = $item->add($category, $title, $description, $content, $imgUrl, $previewImgUrl, $allow_comments);
+            $result = $item->add($category, $title, $description, $content, $imgUrl, $previewImgUrl, $allow_comments, $videoUrl);
 
             if ($result['error'] === false) {
 

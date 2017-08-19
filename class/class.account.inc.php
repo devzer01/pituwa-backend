@@ -1348,14 +1348,16 @@ class account extends db_connect
 
     public function setPhoto($array_data)
     {
-        $stmt = $this->db->prepare("UPDATE users SET originPhotoUrl = (:originPhotoUrl), normalPhotoUrl = (:normalPhotoUrl), bigPhotoUrl = (:bigPhotoUrl), lowPhotoUrl = (:lowPhotoUrl) WHERE id = (:account_id)");
-        $stmt->bindParam(":account_id", $this->id, PDO::PARAM_INT);
-        $stmt->bindParam(":originPhotoUrl", $array_data['originPhotoUrl'], PDO::PARAM_STR);
-        $stmt->bindParam(":normalPhotoUrl", $array_data['normalPhotoUrl'], PDO::PARAM_STR);
-        $stmt->bindParam(":bigPhotoUrl", $array_data['bigPhotoUrl'], PDO::PARAM_STR);
-        $stmt->bindParam(":lowPhotoUrl", $array_data['lowPhotoUrl'], PDO::PARAM_STR);
-
-        $stmt->execute();
+        $stmt = $this->db->prepare("UPDATE users 
+            SET originPhotoUrl = :p1, 
+                normalPhotoUrl = :p2, 
+                bigPhotoUrl = :p3, 
+                lowPhotoUrl = :p4 
+                WHERE id = :id");
+        $stmt->execute([':p1' => $array_data['originPhotoUrl'],
+            ':p2' => $array_data['originPhotoUrl'],
+            ':p3' => $array_data['originPhotoUrl'],
+            ':p4' => $array_data['originPhotoUrl'], ':id' => $this->id]);
     }
 
     public function setCover($array_data)
