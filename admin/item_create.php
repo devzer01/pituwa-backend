@@ -59,7 +59,10 @@
 
         $allow_comments = isset($_POST['allow_comments']) ? $_POST['allow_comments'] : '';
 
-        $title = helper::clearText($title);
+        $videoUrl = helper::clearText($videoUrl);
+        $videoUrl = helper::escapeText($videoUrl);
+        
+	$title = helper::clearText($title);
         $title = helper::escapeText($title);
 
         $description = helper::clearText($description);
@@ -170,6 +173,10 @@
                                     <div class="input-field col s12">
                                         <input placeholder="Title" id="title" type="text" name="title" maxlength="255" class="validate" value="<?php echo stripslashes($title); ?>">
                                         <label for="title">Title</label>
+                                    </div>
+                                    <div class="input-field col s12">
+                                        <input placeholder="Video Url" id="videoUrl" type="text" name="videoUrl" maxlength="255" class="validate" value="<?php echo stripslashes($videoUrl); ?>">
+                                        <label for="title">Video Url</label>
                                     </div>
 
                                     <div class="file-field input-field col s12">
