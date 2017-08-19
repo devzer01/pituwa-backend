@@ -14,8 +14,6 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config/api.inc.php");
 
 if (!empty($_POST)) {
 
-	file_put_contents("/var/tmp/signup-post.txt", print_r($_POST, true));
-
     $clientId = isset($_POST['clientId']) ? $_POST['clientId'] : 0;
 
     $gcm_regId = isset($_POST['gcm_regId']) ? $_POST['gcm_regId'] : '';
@@ -121,7 +119,6 @@ if (!empty($_POST)) {
         }
     }
 
-	file_put_contents("/var/tmp/signup-json.txt", json_encode($result));
     echo json_encode($result);
     exit;
 }
