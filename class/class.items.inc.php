@@ -53,7 +53,7 @@ class items extends db_connect
         return $number_of_rows = $stmt->fetchColumn();
     }
 
-    public function add($category, $title, $description, $content, $imgUrl, $previewImgUrl, $allowComments = 1, $postArea = "", $postCountry = "", $postCity = "", $postLat = "0.000000", $postLng = "0.000000")
+    public function add($category, $title, $description, $content, $imgUrl, $previewImgUrl, $allowComments = 1, $videoUrl, $postArea = "", $postCountry = "", $postCity = "", $postLat = "0.000000", $postLng = "0.000000")
     {
         $result = array("error" => true,
                         "error_code" => ERROR_UNKNOWN);
@@ -77,7 +77,8 @@ class items extends db_connect
         $ip_addr = helper::ip_addr();
         $u_agent = helper::u_agent();
 
-        $stmt = $this->db->prepare("INSERT INTO items (allowComments, fromUserId, category, itemTitle, itemDesc, itemContent, imgUrl, previewImgUrl, area, country, city, lat, lng, createAt, ip_addr, u_agent) value (:allowComments, :fromUserId, :category, :itemTitle, :itemDesc, :itemContent, :imgUrl, :previewImgUrl, :area, :country, :city, :lat, :lng, :createAt, :ip_addr, :u_agent)");
+        $stmt = $this->db->prepare("INSERT INTO items (allowComments, fromUserId, category, itemTitle, itemDesc, itemContent, 
+                                    imgUrl, previewImgUrl, area, country, city, lat, lng, createAt, ip_addr, u_agent, videoUrl) value (:allowComments, :fromUserId, :category, :itemTitle, :itemDesc, :itemContent, :imgUrl, :previewImgUrl, :area, :country, :city, :lat, :lng, :createAt, :ip_addr, :u_agent, :videoUrl)");
         $stmt->bindParam(":allowComments", $allowComments, PDO::PARAM_INT);
         $stmt->bindParam(":fromUserId", $this->requestFrom, PDO::PARAM_INT);
         $stmt->bindParam(":category", $category, PDO::PARAM_INT);
@@ -94,6 +95,7 @@ class items extends db_connect
         $stmt->bindParam(":createAt", $currentTime, PDO::PARAM_INT);
         $stmt->bindParam(":ip_addr", $ip_addr, PDO::PARAM_STR);
         $stmt->bindParam(":u_agent", $u_agent, PDO::PARAM_STR);
+        $stmt->bindParam(":videoUrl", $videoUrl, PDO::PARAM_STR);
 
         if ($stmt->execute()) {
 
@@ -196,7 +198,7 @@ class items extends db_connect
         return $result;
     }
 
-    public function edit($itemId, $category, $title, $imgUrl, $content, $allowComments)
+    public function edit($itemId, $category, $title, $imgUrl, $content, $allowComments, $videoUrl)
     {
         $result = array("error" => true,
                         "error_code" => ERROR_UNKNOWN);
@@ -221,13 +223,14 @@ class items extends db_connect
             return $result;
         }
 
-        $stmt = $this->db->prepare("UPDATE items SET allowComments = (:allowComments), category = (:category), itemTitle = (:itemTitle), itemContent = (:itemContent), imgUrl = (:imgUrl) WHERE id = (:itemId)");
+        $stmt = $this->db->prepare("UPDATE items SET allowComments = (:allowComments), category = (:category), itemTitle = (:itemTitle), itemContent = (:itemContent), imgUrl = (:imgUrl), videoUrl = (:videoUrl) WHERE id = (:itemId)");
         $stmt->bindParam(":allowComments", $allowComments, PDO::PARAM_INT);
         $stmt->bindParam(":category", $category, PDO::PARAM_INT);
         $stmt->bindParam(":itemTitle", $title, PDO::PARAM_STR);
         $stmt->bindParam(":itemContent", $content, PDO::PARAM_STR);
         $stmt->bindParam(":imgUrl", $imgUrl, PDO::PARAM_STR);
         $stmt->bindParam(":itemId", $itemId, PDO::PARAM_INT);
+        $stmt->bindParam(":videoUrl", $videoUrl, PDO::PARAM_STR);
 
         if ($stmt->execute()) {
 
@@ -429,7 +432,8 @@ class items extends db_connect
                                 "createAt" => $row['createAt'],
                                 "date" => date("Y-m-d H:i:s", $row['createAt']),
                                 "timeAgo" => $time->timeAgo($row['createAt']),
-                                "removeAt" => $row['removeAt']);
+                                "removeAt" => $row['removeAt'],
+                                "videoUrl" => $row['videoUrl']);
             }
         }
 

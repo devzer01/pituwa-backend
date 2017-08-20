@@ -85,6 +85,10 @@
         $content = isset($_POST['content']) ? $_POST['content'] : '';
         $category = isset($_POST['category']) ? $_POST['category'] : 0;
         $allow_comments = isset($_POST['allow_comments']) ? $_POST['allow_comments'] : '';
+        $videoUrl  = isset($_POST['videoUrl']) ? $_POST['videoUrl'] : '';
+
+        $videoUrl = helper::clearText($videoUrl);
+        $videoUrl = helper::escapeText($videoUrl);
 
         $title = helper::clearText($title);
         $title = helper::escapeText($title);
@@ -117,7 +121,7 @@
 
             $item = new items($dbo);
 
-            $result = $item->edit($itemId, $category, $title, $imgUrl, $content, $allow_comments);
+            $result = $item->edit($itemId, $category, $title, $imgUrl, $content, $allow_comments, $videoUrl);
 
             if ($result['error'] === false) {
 
@@ -197,6 +201,11 @@
                                     <div class="input-field col s12">
                                         <input placeholder="Title" id="title" type="text" name="title" maxlength="255" class="validate" value="<?php echo $itemInfo['itemTitle']; ?>">
                                         <label for="title">Title</label>
+                                    </div>
+
+                                    <div class="input-field col s12">
+                                        <input placeholder="Video Url" id="title" type="text" name="title" maxlength="255" class="validate" value="<?php echo $itemInfo['videoUrl']; ?>">
+                                        <label for="title">Video Url</label>
                                     </div>
 
                                     <div class="input-field col s12 m7 image-preview">

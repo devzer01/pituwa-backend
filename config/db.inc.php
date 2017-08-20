@@ -40,8 +40,8 @@ $B['APP_YEAR'] = "2016";                                // Year in footer
 
 // Your domain (host) and url! See comments! Carefully!
 
-$B['APP_HOST'] = "backend.pituwa.co";                 //edit to your domain, example (WARNING - without http:// and www): yourdomain.com
-$B['APP_URL'] = "http://backend.pituwa.co";           //edit to your domain url, example (WARNING - with http://): http://yourdomain.com
+$B['APP_HOST'] = "stage.backend.pituwa.co";                 //edit to your domain, example (WARNING - without http:// and www): yourdomain.com
+$B['APP_URL'] = "http://stage.backend.pituwa.co";           //edit to your domain url, example (WARNING - with http://): http://yourdomain.com
 
 // Link to GOOGLE Play App in main page
 
@@ -69,9 +69,9 @@ $B['SMTP_PASSWORD'] = 'password';                           //SMTP password
 //Please edit database data
 
 $C['DB_HOST'] = "localhost";                                //localhost or your db host
-$C['DB_USER'] = "pituwadb";                             //your db user
-$C['DB_PASS'] = "V8UAEuP09X";                         //your db password
-$C['DB_NAME'] = "pituwadb";                             //your db name
+$C['DB_USER'] = "pituwa_stage";                             //your db user
+$C['DB_PASS'] = "x2c4eva";                         //your db password
+$C['DB_NAME'] = "pituwa_stage";                             //your db name
 
 
 $C['ERROR_SUCCESS'] = 0;

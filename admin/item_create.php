@@ -53,13 +53,17 @@
 
         $authToken = isset($_POST['authenticity_token']) ? $_POST['authenticity_token'] : '';
         $title = isset($_POST['title']) ? $_POST['title'] : '';
+        $videoUrl = isset($_POST['videoUrl']) ? $_POST['videoUrl'] : '';
         $description = isset($_POST['description']) ? $_POST['description'] : '';
         $content = isset($_POST['content']) ? $_POST['content'] : '';
         $category = isset($_POST['category']) ? $_POST['category'] : 0;
 
         $allow_comments = isset($_POST['allow_comments']) ? $_POST['allow_comments'] : '';
 
-        $title = helper::clearText($title);
+        $videoUrl = helper::clearText($videoUrl);
+        $videoUrl = helper::escapeText($videoUrl);
+        
+	    $title = helper::clearText($title);
         $title = helper::escapeText($title);
 
         $description = helper::clearText($description);
@@ -90,7 +94,7 @@
 
             $item = new items($dbo);
 
-            $result = $item->add($category, $title, $description, $content, $imgUrl, $previewImgUrl, $allow_comments);
+            $result = $item->add($category, $title, $description, $content, $imgUrl, $previewImgUrl, $allow_comments, $videoUrl);
 
             if ($result['error'] === false) {
 
@@ -170,6 +174,10 @@
                                     <div class="input-field col s12">
                                         <input placeholder="Title" id="title" type="text" name="title" maxlength="255" class="validate" value="<?php echo stripslashes($title); ?>">
                                         <label for="title">Title</label>
+                                    </div>
+                                    <div class="input-field col s12">
+                                        <input placeholder="Video Url" id="videoUrl" type="text" name="videoUrl" maxlength="255" class="validate" value="<?php echo stripslashes($videoUrl); ?>">
+                                        <label for="title">Video Url</label>
                                     </div>
 
                                     <div class="file-field input-field col s12">
