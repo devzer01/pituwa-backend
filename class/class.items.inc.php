@@ -440,6 +440,84 @@ class items extends db_connect
         return $result;
     }
 
+    public function infoV2($itemId)
+    {
+        $result = array("error" => true,
+            "error_code" => ERROR_UNKNOWN);
+
+        $stmt = $this->db->prepare("SELECT * FROM items WHERE id = (:itemId) LIMIT 1");
+        $stmt->bindParam(":itemId", $itemId, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+
+            if ($stmt->rowCount() > 0) {
+
+                $row = $stmt->fetch();
+
+                $time = new language($this->db, $this->language);
+
+                $myLike = false;
+
+                if ($this->requestFrom != 0) {
+
+                    if ($this->is_like_exists($itemId, $this->requestFrom)) {
+
+                        $myLike = true;
+                    }
+                }
+
+                if ($row['fromUserId'] != 0) {
+
+                    $profile = new profile($this->db, $row['fromUserId']);
+                    $profileInfo = $profile->get();
+                    unset($profile);
+
+                } else {
+
+                    $profileInfo = array("username" => "",
+                        "fullname" => "",
+                        "lowPhotoUrl" => "");
+                }
+
+                $category = new categories($this->db);
+                $categoryInfo = $category->info($row['category']);
+                unset($category);
+                $breaks = array("<br />","<br>","<br/>");
+                $result = array("error" => false,
+                    "error_code" => ERROR_SUCCESS,
+                    "id" => $row['id'],
+                    "category" => $row['category'],
+                    "categoryTitle" => $categoryInfo['title'],
+                    "fromUserId" => $row['fromUserId'],
+                    "fromUserUsername" => $profileInfo['username'],
+                    "fromUserFullname" => $profileInfo['fullname'],
+                    "fromUserPhoto" => $profileInfo['lowPhotoUrl'],
+                    "itemTitle" => htmlspecialchars_decode(stripslashes($row['itemTitle'])),
+                    "itemDesc" => htmlspecialchars_decode(stripslashes($row['itemDesc'])),
+                    "itemContent" => html_entity_decode(htmlspecialchars_decode(strip_tags(str_ireplace($breaks, "\r\n", $row['itemContent'])))),
+                    "area" => htmlspecialchars_decode(stripslashes($row['area'])),
+                    "country" => htmlspecialchars_decode(stripslashes($row['country'])),
+                    "city" => htmlspecialchars_decode(stripslashes($row['city'])),
+                    "lat" => $row['lat'],
+                    "lng" => $row['lng'],
+                    "previewImgUrl" => $row['previewImgUrl'],
+                    "imgUrl" => $row['imgUrl'],
+                    "allowComments" => $row['allowComments'],
+                    "rating" => $row['rating'],
+                    "commentsCount" => $row['commentsCount'],
+                    "likesCount" => $row['likesCount'],
+                    "myLike" => $myLike,
+                    "createAt" => $row['createAt'],
+                    "date" => date("Y-m-d H:i:s", $row['createAt']),
+                    "timeAgo" => $time->timeAgo($row['createAt']),
+                    "removeAt" => $row['removeAt'],
+                    "videoUrl" => $row['videoUrl']);
+            }
+        }
+
+        return $result;
+    }
+
     public function get($profileId, $itemId = 0)
     {
         if ($itemId == 0) {
