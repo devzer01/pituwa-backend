@@ -40,8 +40,8 @@ $B['APP_YEAR'] = "2016";                                // Year in footer
 
 // Your domain (host) and url! See comments! Carefully!
 
-$B['APP_HOST'] = "stage.backend.pituwa.co";                 //edit to your domain, example (WARNING - without http:// and www): yourdomain.com
-$B['APP_URL'] = "http://stage.backend.pituwa.co";           //edit to your domain url, example (WARNING - with http://): http://yourdomain.com
+$B['APP_HOST'] = "backend.pituwa.co";                 //edit to your domain, example (WARNING - without http:// and www): yourdomain.com
+$B['APP_URL'] = "http://backend.pituwa.co";           //edit to your domain url, example (WARNING - with http://): http://yourdomain.com
 
 // Link to GOOGLE Play App in main page
 
@@ -58,20 +58,20 @@ $B['GOOGLE_SENDER_ID'] = "784770969877";
 
 // SMTP Settings | For password recovery | Data for SMTP can ask your hosting provider |
 
-$B['SMTP_HOST'] = 'smtp.yousite.com';                       //SMTP host | Specify main and backup SMTP servers
+$B['SMTP_HOST'] = 'smtp.gmail.com';                       //SMTP host | Specify main and backup SMTP servers
 $B['SMTP_AUTH'] = true;                                     //SMTP auth (Enable SMTP authentication)
 $B['SMTP_SECURE'] = 'tls';                                  //SMTP secure (Enable TLS encryption, `ssl` also accepted)
 $B['SMTP_PORT'] = 587;                                      //SMTP port (TCP port to connect to)
-$B['SMTP_EMAIL'] = 'support@yousite.com';                   //SMTP email
-$B['SMTP_USERNAME'] = 'support@yousite.com';                //SMTP username
-$B['SMTP_PASSWORD'] = 'password';                           //SMTP password
+$B['SMTP_EMAIL'] =  'info@pituwa.lk';                   //SMTP email
+$B['SMTP_USERNAME'] = 'nayana@corp-gems.com';                //SMTP username
+$B['SMTP_PASSWORD'] = 'V91113147nkH';                           //SMTP password
 
 //Please edit database data
 
 $C['DB_HOST'] = "localhost";                                //localhost or your db host
-$C['DB_USER'] = "pituwa_stage";                             //your db user
-$C['DB_PASS'] = "x2c4eva";                         //your db password
-$C['DB_NAME'] = "pituwa_stage";                             //your db name
+$C['DB_USER'] = "pituwadb";                             //your db user
+$C['DB_PASS'] = "V8UAEuP09X";                         //your db password
+$C['DB_NAME'] = "pituwadb";                             //your db name
 
 
 $C['ERROR_SUCCESS'] = 0;

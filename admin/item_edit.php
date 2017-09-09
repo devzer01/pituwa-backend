@@ -204,7 +204,7 @@
                                     </div>
 
                                     <div class="input-field col s12">
-                                        <input placeholder="Video Url" id="title" type="text" name="title" maxlength="255" class="validate" value="<?php echo $itemInfo['videoUrl']; ?>">
+                                        <input placeholder="Video Url" id="videoUrl" type="text" name="videoUrl" maxlength="255" class="validate" value="<?php echo $itemInfo['videoUrl']; ?>">
                                         <label for="title">Video Url</label>
                                     </div>
 
